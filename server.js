@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 const chalk = require('chalk');
 const cors = require('cors');
 const express = require('express');
-const { ConfigsManager, ExpressConnector } = require('drtools');
+const { ExpressConnector } = require('drtools');
 const http = require('http');
 const path = require('path');
 //
