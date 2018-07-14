@@ -1,1 +1,6 @@
-{}
+{
+    "$exports": {},
+    "drtools": {
+        "webUi": true
+    }
+}
