@@ -54,27 +54,32 @@ loadingSteps.push(async () => {
 //
 // Loading DRTools loaders.
 loadingSteps.push(async () => {
-    new LoadersManager(path.join(__dirname, 'includes/loaders'), {}, global.configs);
+    const manager = new LoadersManager(path.join(__dirname, 'includes/loaders'), {}, global.configs);
+    await manager.load();
 });
 //
 // Loading DRTools middlewares.
 loadingSteps.push(async () => {
-    new MiddlewaresManager(app, path.join(__dirname, 'includes/middlewares'), {}, global.configs);
+    const manager = new MiddlewaresManager(app, path.join(__dirname, 'includes/middlewares'), {}, global.configs);
+    await manager.load();
 });
 //
 // Loading DRTools plugins.
 loadingSteps.push(async () => {
-    new PluginsManager(path.join(__dirname, 'plugins'), {}, global.configs);
+    const manager = new PluginsManager(path.join(__dirname, 'plugins'), {}, global.configs);
+    await manager.load();
 });
 //
 // Loading DRTools routes.
 loadingSteps.push(async () => {
-    new RoutesManager(app, path.join(__dirname, 'includes/routes'), {}, global.configs);
+    const manager = new RoutesManager(app, path.join(__dirname, 'includes/routes'), {}, global.configs);
+    await manager.load();
 });
 //
 // Loading DRTools tasks.
 loadingSteps.push(async () => {
-    new TasksManager(path.join(__dirname, 'includes/tasks'), {}, global.configs);
+    const manager = new TasksManager(path.join(__dirname, 'includes/tasks'), {}, global.configs);
+    await manager.load();
 });
 //
 // Loading DRTools mock-endpoints.
