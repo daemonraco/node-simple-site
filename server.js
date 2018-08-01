@@ -24,20 +24,20 @@ const {
 } = require('drtools');
 //
 // Creating an express application.
-const app = express();
+global.expressApp = express();
 //
 // Loading steps.
 const loadingSteps = [];
 //
 // Loading parser.
 loadingSteps.push(async () => {
-    app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({ extended: false }));
+    global.expressApp.use(bodyParser.json());
+    global.expressApp.use(bodyParser.urlencoded({ extended: false }));
 });
 //
 // Loading cors.
 loadingSteps.push(async () => {
-    app.use(cors());
+    global.expressApp.use(cors());
 });
 //
 // Loading DRTools configs.
@@ -47,7 +47,7 @@ loadingSteps.push(async () => {
 //
 // Loading DRTools ExpressJS connector.
 loadingSteps.push(async () => {
-    ExpressConnector.attach(app, {
+    ExpressConnector.attach(global.expressApp, {
         webUi: global.configs.get('environment').drtools.webUi
     });
 });
@@ -60,7 +60,7 @@ loadingSteps.push(async () => {
 //
 // Loading DRTools middlewares.
 loadingSteps.push(async () => {
-    const manager = new MiddlewaresManager(app, path.join(__dirname, 'includes/middlewares'), {}, global.configs);
+    const manager = new MiddlewaresManager(global.expressApp, path.join(__dirname, 'includes/middlewares'), {}, global.configs);
     await manager.load();
 });
 //
@@ -72,7 +72,7 @@ loadingSteps.push(async () => {
 //
 // Loading DRTools routes.
 loadingSteps.push(async () => {
-    const manager = new RoutesManager(app, path.join(__dirname, 'includes/routes'), {}, global.configs);
+    const manager = new RoutesManager(global.expressApp, path.join(__dirname, 'includes/routes'), {}, global.configs);
     await manager.load();
 });
 //
@@ -88,17 +88,17 @@ loadingSteps.push(async () => {
         directory: path.join(__dirname, 'includes/mock-endpoints'),
         uri: 'mock-api/v1.0'
     }, global.configs);
-    app.use(endpoints.provide());
+    global.expressApp.use(endpoints.provide());
 });
 //
 // Setting static folders.
 loadingSteps.push(async () => {
-    app.use(express.static(path.join(__dirname, 'public')));
+    global.expressApp.use(express.static(path.join(__dirname, 'public')));
 });
 //
 // Setting default routes.
 loadingSteps.push(async () => {
-    app.use(function (req, res, next) {
+    global.expressApp.use(function (req, res, next) {
         if (req.xhr || req.headers['accept'] === 'application/json' || req.headers['content-type'] === 'application/json') {
             res.status(404).json({
                 message: 'Not Found',
@@ -125,7 +125,7 @@ const loadSteps = async () => {
     } else {
         //
         // Starting server.
-        http.createServer(app).listen(port, () => {
+        http.createServer(global.expressApp).listen(port, () => {
             console.log(`\nListening on port '${port}'...`);
         });
     }
