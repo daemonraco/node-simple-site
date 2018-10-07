@@ -1,6 +1,7 @@
 export const environment = {
     production: true,
     api: {
-        host: ''
-    }
+        host: '',
+        restUri: '/rest',
+    },
 };
