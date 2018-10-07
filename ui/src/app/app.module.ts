@@ -2,23 +2,23 @@ import { BrowserModule } from '@angular/platform-browser';
 import { DRToolsModule } from 'ng-drtools';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 
+import { AppInitFactory } from './app.init';
+
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HomeComponent } from './pages/home/home.component';
-import { NavComponent } from './directives/nav/nav.component';
-
-import { AppInitFactory } from './app.init';
+import { BasicsModule } from './basics/basics.module';
+import { PagesModule } from './pages/pages.module';
 
 @NgModule({
     declarations: [
         AppComponent,
-        HomeComponent,
-        NavComponent,
     ],
     imports: [
         AppRoutingModule,
+        BasicsModule,
         BrowserModule,
         DRToolsModule,
+        PagesModule,
     ],
     providers: [
         {
