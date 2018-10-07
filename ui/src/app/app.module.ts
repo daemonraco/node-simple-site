@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { DRToolsModule } from 'ng-drtools';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 
 import { AppComponent } from './app.component';
@@ -12,11 +13,12 @@ import { AppInitFactory } from './app.init';
     declarations: [
         AppComponent,
         HomeComponent,
-        NavComponent
+        NavComponent,
     ],
     imports: [
+        AppRoutingModule,
         BrowserModule,
-        AppRoutingModule
+        DRToolsModule,
     ],
     providers: [
         {
