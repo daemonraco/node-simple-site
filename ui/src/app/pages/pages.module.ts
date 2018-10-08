@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 
 import { HomeComponent } from './home/home.component';
 
+import { PagesRoutingModule } from './pages-routing.module';
+
 @NgModule({
     declarations: [
         HomeComponent,
@@ -14,6 +16,7 @@ import { HomeComponent } from './home/home.component';
     imports: [
         CommonModule,
         DRToolsModule,
+        PagesRoutingModule,
     ],
 })
 export class PagesModule { }
