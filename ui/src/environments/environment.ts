@@ -5,7 +5,6 @@
 export const environment = {
     production: false,
     api: {
-        host: 'http://192.168.1.10:3000',
         restUri: '/rest',
     },
 };

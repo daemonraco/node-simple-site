@@ -7,7 +7,7 @@ export const AppInitFactory = () => {
         console.log(`Initiazing...`);
 
         DRToolsService.SetConfig({
-            host: environment.api.host,
+            host: '',
             mysqlUri: environment.api.restUri,
         });
 

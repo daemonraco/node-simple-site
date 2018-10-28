@@ -112,24 +112,17 @@ loadingSteps.push(async () => {
 });
 //
 // Steps loaders.
-const loadSteps = async () => {
-    const step = loadingSteps.shift();
-
-    if (step) {
-        try {
+(async () => {
+    try {
+        for (const step of loadingSteps) {
             await step();
-            loadSteps();
-        } catch (err) {
-            console.error(chalk.red(err));
         }
-    } else {
         //
         // Starting server.
         http.createServer(global.expressApp).listen(port, () => {
             console.log(`\nListening on port '${port}'...`);
         });
+    } catch (err) {
+        console.error(chalk.red(err));
     }
-};
-//
-// Loading...
-loadSteps();
+})();
