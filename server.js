@@ -4,9 +4,9 @@
 const port = process.env.PORT || 3000;
 //
 // Basic required libraries.
+const HttpStatusCodes = require('http-status-codes');
 const bodyParser = require('body-parser');
 const chalk = require('chalk');
-const cors = require('cors');
 const express = require('express');
 const http = require('http');
 const path = require('path');
@@ -20,7 +20,7 @@ const {
     MiddlewaresManager,
     RoutesManager,
     PluginsManager,
-    TasksManager
+    TasksManager,
 } = require('drtools');
 //
 // Creating an express application.
@@ -35,11 +35,6 @@ loadingSteps.push(async () => {
     global.expressApp.use(bodyParser.urlencoded({ extended: false }));
 });
 //
-// Loading cors.
-loadingSteps.push(async () => {
-    global.expressApp.use(cors());
-});
-//
 // Loading DRTools configs.
 loadingSteps.push(async () => {
     global.configs = new ConfigsManager(path.join(__dirname, 'configs'), { publishConfigs: true });
@@ -48,7 +43,7 @@ loadingSteps.push(async () => {
 // Loading DRTools ExpressJS connector.
 loadingSteps.push(async () => {
     ExpressConnector.attach(global.expressApp, {
-        webUi: global.configs.get('environment').drtools.webUi
+        webUi: global.configs.get('environment').drtools.webUi,
     });
 });
 //
@@ -86,7 +81,7 @@ loadingSteps.push(async () => {
 loadingSteps.push(async () => {
     const endpoints = new EndpointsManager({
         directory: path.join(__dirname, 'includes/mock-endpoints'),
-        uri: 'mock-api/v1.0'
+        uri: 'mock-api/v1.0',
     }, global.configs);
     global.expressApp.use(endpoints.provide());
 });
@@ -100,13 +95,13 @@ loadingSteps.push(async () => {
 loadingSteps.push(async () => {
     global.expressApp.use(function (req, res, next) {
         if (req.xhr || req.headers['accept'] === 'application/json' || req.headers['content-type'] === 'application/json') {
-            res.status(404).json({
+            res.status(HttpStatusCodes.NOT_FOUND).json({
                 message: 'Not Found',
                 uri: req.url,
-                isAjax: req.xhr
+                isAjax: req.xhr,
             });
         } else {
-            res.sendFile(__dirname + '/public/index.html');
+            res.sendFile(path.join(__dirname, '/public/index.html'));
         }
     });
 });
