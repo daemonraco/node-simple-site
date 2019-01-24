@@ -29,15 +29,23 @@ global.expressApp = express();
 // Loading steps.
 const loadingSteps = [];
 //
+// Loading DRTools configs.
+loadingSteps.push(async () => {
+    global.configs = new ConfigsManager(path.join(__dirname, 'configs'));
+    global.env = global.configs.get('environment');
+    global.envName = global.configs.environmentName();
+    global.expressApp.use(global.configs.publishExports());
+});
+//
+// Setting up a logs manager.
+loadingSteps.push(async () => {
+    require('./includes/logger');
+});
+//
 // Loading parser.
 loadingSteps.push(async () => {
     global.expressApp.use(bodyParser.json());
     global.expressApp.use(bodyParser.urlencoded({ extended: false }));
-});
-//
-// Loading DRTools configs.
-loadingSteps.push(async () => {
-    global.configs = new ConfigsManager(path.join(__dirname, 'configs'), { publishConfigs: true });
 });
 //
 // Loading DRTools ExpressJS connector.

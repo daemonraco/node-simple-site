@@ -2,5 +2,13 @@
     "$exports": {},
     "drtools": {
         "webUi": true
+    },
+    "logs": {
+        "levels": {
+            "console": false,
+            "debug": false,
+            "error": true,
+            "info": false
+        }
     }
 }
